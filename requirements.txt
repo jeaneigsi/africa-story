@@ -1,0 +1,13 @@
+mediapy
+torch
+matplotlib
+rembg
+langchain
+langchain-google-genai
+streamlit
+huggingface_hub
+pillow
+diffusers
+langchain_core
+langchain_community
+python-dotenv
