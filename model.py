@@ -1,16 +1,11 @@
+import subprocess
 
-
-num_inference_steps = 8
-
-base_model_id = "stabilityai/stable-diffusion-xl-base-1.0"
-repo_name = "ByteDance/Hyper-SD"
-plural = "s" if num_inference_steps > 1 else ""
-ckpt_name = f"Hyper-SDXL-{num_inference_steps}step{plural}-lora.safetensors"
-device = "cuda"
-
-pipe = DiffusionPipeline.from_pretrained(base_model_id, torch_dtype=torch.float16, variant="fp16")
-pipe.load_lora_weights(hf_hub_download(repo_name, ckpt_name))
-pipe.fuse_lora()
-pipe.enable_sequential_cpu_offload()
-pipe.scheduler = TCDScheduler.from_config(pipe.scheduler.config)
-
+def git_clone(repo_url, clone_dir):
+    try:
+        # Commande git clone
+        result = subprocess.run(['git', 'clone', repo_url, clone_dir], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        # Afficher la sortie de la commande
+        print(result.stdout.decode())
+    except subprocess.CalledProcessError as e:
+        # En cas d'erreur, afficher l'erreur
+        print(f"Erreur lors de l'exécution de la commande git clone: {e.stderr.decode()}")
